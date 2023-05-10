@@ -29,7 +29,7 @@
 
 <!-- PROJECT DESCRIPTION -->
 
-# 📖 PORTFOLIO WEBSITE <a name="about-project"></a>
+# 📖 TO-DO LIST WEBSITE <a name="about-project"></a>
 
 **To-do List website** is a website which that displays a list.
 
