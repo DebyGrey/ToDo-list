@@ -85,19 +85,19 @@ git clone https://github.com/DebyGrey/todo-list
 To install this project run this into your terminal:
 
 + git clone https://github.com/DebyGrey/todo-list
-+ run npm install to install all dependecies
++ npm install to install all dependecies
 
 
 ### Usage
 
 To run this project: 
-+ run npm start to view project on browser
++ npm run start - to view project on browser
 
 
 ### Run tests
 
 To test this project: 
-+ run npm start to view project on browser
++ npm run start - to view project on browser
 
 
 ### Deployment
