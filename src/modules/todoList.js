@@ -1,6 +1,7 @@
-const tasksToDo = [
-  { description: 'task a', completed: false, index: 1 },
-  { description: 'task c', completed: false, index: 3 },
-  { description: 'task b', completed: false, index: 2 },
-];
-export default tasksToDo;
+export default class TasksToDo {
+  constructor(description, completed, index) {
+    this.description = description;
+    this.completed = completed;
+    this.index = index;
+  }
+}
