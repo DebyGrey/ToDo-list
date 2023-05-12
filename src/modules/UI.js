@@ -6,6 +6,8 @@ export default class UI {
 
   static completedTasks = [];
 
+  static editedList = '';
+
   static displayToDoList = () => {
     const toDoListContainer = document.querySelector(
       '.to-do-list-item-container',
@@ -29,8 +31,8 @@ export default class UI {
         listItem.innerHTML = `
   <input type="checkbox" class="checkbox" id="${taskIndex}" name="${taskDescription}" value="${taskDescription}"><i class="fa fa-check hide blue-tick" aria-hidden="true"></i><div class='task-description'>${taskDescription}</div>
   <input type="text" class="edit-input hide" id="${taskIndex}" name="${taskDescription}" value="${taskDescription}">
-  <button type="button" class="option-btn" ><i class="fa fa-ellipsis-v menu" id="${taskIndex}" aria-hidden="true"></i></button>
-   <button type="button" class="trash-task-btn hide" ><i class="fa fa-trash trash-bin" aria-hidden="true"></i></button>
+  <button type="button" class="option-btn" ><i class="fa fa-ellipsis-v fa-2xl menu" id="${taskIndex}" aria-hidden="true"></i></button>
+   <button type="button" class="trash-task-btn hide" ><i class="fa fa-trash fa-xl trash-bin" aria-hidden="true"></i></button>
   `;
         toDoListContainer.appendChild(listItem);
       });
@@ -38,7 +40,20 @@ export default class UI {
       const optionBtn = document.querySelectorAll('.option-btn');
       optionBtn.forEach((btn) => {
         btn.addEventListener('click', (event) => {
-          UI.editTask(event.target);
+          const listItem = event.target.closest('.to-do-list-item');
+          if (UI.editedList === '') {
+            UI.editedList = listItem;
+            UI.editMode(UI.editedList);
+          } else if (UI.editedList) {
+            if (UI.editedList !== listItem) {
+              UI.cancelEditMode(UI.editedList);
+              UI.editedList = listItem;
+              UI.editMode(UI.editedList);
+            } else if (UI.editedList === listItem) {
+              UI.cancelEditMode(listItem);
+              UI.editMode(UI.editedList);
+            }
+          }
         });
       });
 
@@ -77,7 +92,6 @@ export default class UI {
 
   // clear all completed tasks
   static clearAllCompletedTasks = (e) => {
-    // Store.clearAllTasks();
     e.preventDefault();
     if (UI.completedTasks.length === 0) {
       UI.showAlert('No task selected!', 'danger');
@@ -126,19 +140,20 @@ export default class UI {
         checkboxItself.classList.add('hide');
         blueTick.classList.remove('hide');
         checkbox.dataset.completedTask = JSON.stringify(completedTask);
-      } else { taskDescription.classList.remove('completed'); }
+      } else {
+        taskDescription.classList.remove('completed');
+      }
     }
   };
 
   // edit task
-  static editTask = (taskOption) => {
-    const taskID = parseInt(taskOption.id, 10);
-    const listItem = taskOption.closest('.to-do-list-item');
+  static editMode = (listItem) => {
     const editInput = listItem.querySelector('.edit-input');
     const checkbox = listItem.querySelector('.checkbox');
     const taskDescription = listItem.querySelector('.task-description');
     const menuIcon = listItem.querySelector('.menu');
     const trashBin = listItem.querySelector('.trash-task-btn');
+    const taskID = parseInt(menuIcon.id, 10);
 
     if (listItem) {
       const task = UI.toDoList.findIndex((t) => t.index === taskID);
@@ -150,11 +165,32 @@ export default class UI {
         checkbox.classList.add('hide');
         menuIcon.classList.add('hide');
         taskDescription.classList.add('hide');
-        trashBin.disabled = true;
-        editInput.addEventListener('input', (e) => UI.deleteTask(e, taskID, editInput, trashBin));
         editInput.addEventListener('keypress', (e) => UI.updateTask(e, taskID, editInput));
+        trashBin.addEventListener('click', (e) => {
+          UI.deleteTask(e, taskID);
+        });
+        UI.editedList = listItem;
       }
     }
+  };
+
+  // edit task
+  static cancelEditMode = (listItem) => {
+    const editInput = listItem.querySelector('.edit-input');
+    const checkbox = listItem.querySelector('.checkbox');
+    const taskDescription = listItem.querySelector('.task-description');
+    const menuIcon = listItem.querySelector('.menu');
+    const trashBin = listItem.querySelector('.trash-task-btn');
+
+    // remove all previously added classes
+    listItem.classList.remove('edit-bg-color');
+    editInput.classList.add('hide');
+    trashBin.classList.add('hide');
+    checkbox.classList.remove('hide');
+    menuIcon.classList.remove('hide');
+    taskDescription.classList.remove('hide');
+    editInput.removeEventListener('keypress', UI.updateTask);
+    UI.editedList = '';
   };
 
   // enable delete if fields are empty
@@ -177,18 +213,13 @@ export default class UI {
   }
 
   // enable delete if fields are empty
-  static deleteTask(e, taskID, editInput, trashBin) {
+  static deleteTask(e, taskID) {
     e.preventDefault();
-    const inputValue = editInput.value;
-    if (inputValue === '') {
-      trashBin.disabled = false;
-      trashBin.addEventListener('click', (e) => {
-        Store.removeTask(e, taskID);
-        UI.toDoList = Store.getTasks();
-        UI.reOrderList();
-        UI.displayToDoList();
-      });
-    }
+    Store.removeTask(e, taskID);
+    UI.toDoList = Store.getTasks();
+    UI.reOrderList();
+    UI.displayToDoList();
+    UI.editedList = '';
   }
 
   // show alert
@@ -198,7 +229,6 @@ export default class UI {
     alertDiv.appendChild(document.createTextNode(message));
     const listContainer = document.querySelector('.to-do-list-container');
     listContainer.insertAdjacentElement('afterend', alertDiv);
-
     setTimeout(() => alertDiv.remove(), 1000);
   };
 }

@@ -71,16 +71,16 @@
 .to-do-list-item-container {
   display: flex;
   flex-direction: column;
+  gap: 5px;
 }
 
 .to-do-list-item {
   width: 100%;
-  height: 60px;
-  border-bottom: 2px solid #f6f6f6;
+  height: 65px;
   display: flex;
   gap: 10px;
   align-items: center;
-  padding: 1% 3%;
+  padding: 1% 0% 1% 2%;
   background-color: #fff;
 }
 
@@ -102,15 +102,29 @@ input[type="checkbox"]:checked {
 
 .option-btn,
 .trash-task-btn {
+  padding: 0 0;
   border: none;
   position: absolute;
-  left: 73%;
+  left: 72.5%;
+  width: 20px;
+  height: 30px;
+  z-index: 10;
+  background-color: transparent;
+}
+
+.trash-task-btn {
+  color: #ccc;
+}
+
+.trash-task-btn:hover {
+  color: #000;
 }
 
 /* edit input */
 .edit-input {
   display: flex;
-  width: 100%;
+
+  /* width: 100%; */
   height: 100%;
   border: none;
   font-size: 16px;
