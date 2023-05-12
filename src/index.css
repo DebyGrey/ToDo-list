@@ -8,19 +8,17 @@
   font-family: sans-serif;
 }
 
+/* to-do list section */
+.task-list-error-msg {
+  border: none;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
 .to-do-list-section {
   padding: 10% 25%;
   background-color: #f6f6f6;
-}
-
-.to-do-list-item {
-  height: 60px;
-  border-bottom: 2px solid #f6f6f6;
-  display: flex;
-  gap: 10px;
-  align-items: center;
-  padding: 1% 3%;
-  background-color: #fff;
 }
 
 .to-do-header {
@@ -38,14 +36,6 @@
   font-weight: 500;
 }
 
-.clear-all-completed-btn {
-  width: 100%;
-  height: 60px;
-  border: none;
-  color: #7e8081;
-  background-color: #f6f6f6;
-}
-
 .input-area {
   display: flex;
   justify-content: space-between;
@@ -56,10 +46,16 @@
 }
 
 .input-area input {
-  width: 90%;
+  width: 100%;
   height: 60px;
   border: none;
   font-size: 14px;
+  padding: 1% 1.5%;
+}
+
+.input-area input:focus {
+  outline: none;
+  cursor: auto;
 }
 
 .input-area input::placeholder {
@@ -68,12 +64,94 @@
   color: #7e8081;
 }
 
-.option-btn {
-  border: none;
-  position: relative;
-  left: 88%;
-}
-
 .to-do-list-container {
   box-shadow: 2px 2px 4px 0 rgba(0, 0, 0, 0.2);
+}
+
+.to-do-list-item-container {
+  display: flex;
+  flex-direction: column;
+}
+
+.to-do-list-item {
+  width: 100%;
+  height: 60px;
+  border-bottom: 2px solid #f6f6f6;
+  display: flex;
+  gap: 10px;
+  align-items: center;
+  padding: 1% 3%;
+  background-color: #fff;
+}
+
+input[type="checkbox"]:checked {
+  border: none;
+  background-color: #000;
+  color: #6492ee;
+  font-size: 20px;
+}
+
+.blue-tick {
+  color: #6492ee;
+  font-size: 20px;
+}
+
+.completed {
+  text-decoration: line-through;
+}
+
+.option-btn,
+.trash-task-btn {
+  border: none;
+  position: absolute;
+  left: 73%;
+}
+
+/* edit input */
+.edit-input {
+  display: flex;
+  width: 100%;
+  height: 100%;
+  border: none;
+  font-size: 16px;
+  background-color: transparent;
+}
+
+.edit-input:focus {
+  outline: none;
+  cursor: auto;
+}
+
+.edit-bg-color {
+  background-color: antiquewhite;
+}
+
+.hide {
+  display: none;
+}
+
+.clear-all-tasks-completed-btn {
+  width: 100%;
+  height: 50px;
+  border: none;
+  color: #7e8081;
+  background-color: transparent;
+}
+
+.alert {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 40%;
+  height: 45px;
+  margin: auto;
+  margin: 1% 30%;
+}
+
+.danger {
+  background-color: #f8d7da;
+}
+
+.success {
+  background-color: #d4edda;
 }

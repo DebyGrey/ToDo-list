@@ -10,19 +10,19 @@
     <section class="to-do-list-section">
       <div class="to-do-list-container">
         <div class="to-do-header">
-        <h1>Today's To Do</h1>
-        <i class="fa fa-refresh" aria-hidden="true"></i>
-      </div>
-      <form class="to-do-list-form">
-        <div class="input-area">
-          <input type="text" placeholder="Add to your list..." /><i
-            class="fa fa-sign-in enter-icon"
-            aria-hidden="true"
-          ></i>
+          <h1>Today's To Do</h1>
+          <i class="fa fa-refresh" aria-hidden="true"></i>
         </div>
+        <form class="to-do-list-form" id="task-form">
+          <div class="input-area">
+            <input id="title" type="text" placeholder="Add to your list..." />
+            <i class="fa fa-sign-in enter-icon" aria-hidden="true"></i>
+          </div>
+        </form>
         <ul class="to-do-list-item-container"></ul>
-      </form>
-      <button class="clear-all-completed-btn" type="button">Clear all completed</button>
+        <button class="clear-all-tasks-completed-btn" type="button">
+          Clear all completed
+        </button>
       </div>
     </section>
     <script src="main.js"></script>
