@@ -29,7 +29,7 @@ export default class UI {
         const listItem = document.createElement('div');
         listItem.className = 'to-do-list-item';
         listItem.innerHTML = `
-  <input type="checkbox" class="checkbox" id="${taskIndex}" name="${taskDescription}" value="${taskDescription}"><i class="fa fa-check hide blue-tick" aria-hidden="true"></i><div class='task-description'>${taskDescription}</div>
+  <input type="checkbox" class="checkbox" id="${taskIndex}" name="${taskDescription}" value="${taskDescription}"><i id="${taskIndex}" class="fa fa-check hide blue-tick" aria-hidden="true"></i><div class='task-description'>${taskDescription}</div>
   <input type="text" class="edit-input hide" id="${taskIndex}" name="${taskDescription}" value="${taskDescription}">
   <button type="button" class="option-btn" ><i class="fa fa-ellipsis-v fa-2xl menu" id="${taskIndex}" aria-hidden="true"></i></button>
    <button type="button" class="trash-task-btn hide" ><i class="fa fa-trash fa-xl trash-bin" aria-hidden="true"></i></button>
@@ -79,6 +79,7 @@ export default class UI {
         const task = new TasksToDo(title, false, index + 1);
         Store.setTasks(task);
         UI.toDoList = Store.getTasks();
+        UI.completedTasks = [];
         UI.displayToDoList();
         UI.clearFields();
       }
@@ -140,8 +141,6 @@ export default class UI {
         checkboxItself.classList.add('hide');
         blueTick.classList.remove('hide');
         checkbox.dataset.completedTask = JSON.stringify(completedTask);
-      } else {
-        taskDescription.classList.remove('completed');
       }
     }
   };
@@ -149,7 +148,6 @@ export default class UI {
   // edit task
   static editMode = (listItem) => {
     const editInput = listItem.querySelector('.edit-input');
-    const checkbox = listItem.querySelector('.checkbox');
     const taskDescription = listItem.querySelector('.task-description');
     const menuIcon = listItem.querySelector('.menu');
     const trashBin = listItem.querySelector('.trash-task-btn');
@@ -162,7 +160,6 @@ export default class UI {
         listItem.classList.add('edit-bg-color');
         editInput.classList.remove('hide');
         trashBin.classList.remove('hide');
-        checkbox.classList.add('hide');
         menuIcon.classList.add('hide');
         taskDescription.classList.add('hide');
         editInput.addEventListener('keypress', (e) => UI.updateTask(e, taskID, editInput));
